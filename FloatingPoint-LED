@@ -1,0 +1,181 @@
+import cc.arduino.*;
+import processing.serial.*;
+import oscP5.*;
+import netP5.*;
+
+Arduino arduino;
+
+OscP5 oscP5;
+
+float redAmount = 0.0f;
+float greenAmount = 0.0f;
+float blueAmount = 0.0f;
+
+
+void setup(){
+  size(320, 480);
+  background(0);
+  oscP5 = new OscP5(this, 8000); 
+  arduino = new Arduino(this, Arduino.list()[1],57600);
+  
+  
+}
+
+
+void draw(){
+  background(redAmount, greenAmount, blueAmount);
+  
+  fill(0);
+  //red rect
+  stroke(255,0,0);
+  rect(34,39,67,255);
+  fill(50,40,40);
+  rect(34,39+255,67,-redAmount);
+  
+  //green rect
+  fill(0);
+  stroke(0,255,0);
+  rect(124,39,67,255);
+  fill(40,50,40);
+  rect(124,39+255,67,-greenAmount);
+  
+  //blue rect
+  fill(0);
+  stroke(0,0,255);
+  rect(216,39,67,255);
+  fill(40,40,50);
+  rect(216,39+255,67,-blueAmount);
+  
+  //write to arduino
+  arduino.analogWrite(11, int(redAmount));
+  arduino.analogWrite(10, int(greenAmount));
+  arduino.analogWrite(9, int(blueAmount));
+  
+  
+  
+}
+
+void oscEvent(OscMessage theOscMessage){
+  String addr = theOscMessage.addrPattern();
+  float val = theOscMessage.get(0).floatValue();
+  
+  if(addr.equals("/1/red")){ redAmount = val;}
+  if(addr.equals("/1/green")){ greenAmount = val;}
+  if(addr.equals("/1/blue")){ blueAmount = val;}
+   
+ if(addr.equals("/1/redp")){ redAmount = 255;}
+    if(addr.equals("/1/redp")){ blueAmount = 0;}
+      if(addr.equals("/1/redp")){ greenAmount = 0;}
+    
+  if(addr.equals("/1/orangep")){ greenAmount = 19;}
+     if(addr.equals("/1/orangep")){ redAmount = 255;}
+     if(addr.equals("/1/orangep")){ blueAmount = 0;}
+     
+    if(addr.equals("/1/yellowp")){ redAmount = 255;}
+  if(addr.equals("/1/yellowp")){ greenAmount = 220;}
+    if(addr.equals("/1/yellowp")){ blueAmount = 0;}
+
+if(addr.equals("/1/greenp")){ redAmount = 2;}
+  if(addr.equals("/1/greenp")){ greenAmount = 255;}
+    if(addr.equals("/1/greenp")){ blueAmount = 2;}
+    
+    
+    if(addr.equals("/1/bluep")){ redAmount = 0;}
+  if(addr.equals("/1/bluep")){ greenAmount = 1;}
+    if(addr.equals("/1/bluep")){ blueAmount = 255;}
+    
+    if(addr.equals("/1/purplep")){ redAmount = 240;}
+  if(addr.equals("/1/purplep")){ greenAmount = 1;}
+    if(addr.equals("/1/purplep")){ blueAmount = 255;}
+    
+    if(addr.equals("/1/pinkp")){ redAmount = 255;}
+  if(addr.equals("/1/pinkp")){ greenAmount = 0;}
+    if(addr.equals("/1/pinkp")){ blueAmount = 25;}
+    
+    if(addr.equals("/1/whitep")){ redAmount = 254;}
+  if(addr.equals("/1/whitep")){ greenAmount = 253;}
+    if(addr.equals("/1/whitep")){ blueAmount = 252;}
+    
+    if(addr.equals("/1/clear")){ redAmount = 0;}
+  if(addr.equals("/1/clear")){ greenAmount = 0;}
+    if(addr.equals("/1/clear")){ blueAmount = 0;}
+
+if(addr.equals("/1/random")){ redAmount = random(0,255);}
+if(addr.equals("/1/random")){ greenAmount = random(0,255);}
+if(addr.equals("/1/random")){ blueAmount = random(0,255);}
+
+
+    
+    if(addr.equals("/1/randomred")){ redAmount = random(0,255);}
+
+if(addr.equals("/1/randomgreen")){ greenAmount = random(0,255);}
+
+
+if(addr.equals("/1/randomblue")){ blueAmount = random(0,255);}
+
+  
+
+if(addr.equals("/1/randomredr")){ redAmount = random(0,255);}
+if(addr.equals("/1/randomredr")){ greenAmount = 0;}
+if(addr.equals("/1/randomredr")){ blueAmount = 0;}
+
+
+
+if(addr.equals("/1/randomgreenr")){ greenAmount = random(0,255);}
+if(addr.equals("/1/randomgreenr")){ blueAmount = 0;}
+if(addr.equals("/1/randomgreenr")){ redAmount = 0;}
+
+
+if(addr.equals("/1/randombluer")){ blueAmount = random(0,255);}
+if(addr.equals("/1/randombluer")){ redAmount = 0;}
+if(addr.equals("/1/randombluer")){ greenAmount = 0;}
+
+
+
+
+if(addr.equals("/1/randomflash")){ redAmount = random(0,255);
+delay(55);
+ greenAmount = random(0,255);
+delay(55);
+ blueAmount = random(0,255);
+delay(55);
+ redAmount = random(0,255);
+ delay(55);
+ greenAmount = random(0,255);
+delay(50);
+ blueAmount = random(0,255);
+delay(50);
+ redAmount = random(0,255);
+ delay(50);
+ redAmount = random(0,255);
+ delay(55);
+ greenAmount = random(0,255);
+delay(50);
+ blueAmount = random(0,255);
+delay(50);
+ redAmount = random(0,255);
+ delay(50);
+ redAmount = random(0,255);
+ delay(55);
+ greenAmount = random(0,255);
+delay(50);
+ blueAmount = random(0,255);
+delay(50);
+ redAmount = random(0,255);
+ delay(50); redAmount = random(0,255);
+ delay(55);
+ greenAmount = random(0,255);
+delay(50);
+ blueAmount = random(0,255);
+delay(50);
+ redAmount = random(0,255);
+ delay(50); redAmount = random(0,255);
+ delay(55);
+ greenAmount = random(0,255);
+delay(50);
+ blueAmount = random(0,255);
+delay(50);
+ redAmount = random(0,255);
+ delay(50);}
+}
+
